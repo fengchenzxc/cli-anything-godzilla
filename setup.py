@@ -8,7 +8,7 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name="cli-anything-godzilla",
-    version="1.0.0",
+    version="1.0.1",
     packages=find_namespace_packages(include=["cli_anything.godzilla"]),
     install_requires=[
         "click>=8.0.0",
