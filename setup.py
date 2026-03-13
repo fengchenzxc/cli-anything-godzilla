@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="cli-anything-godzilla",
-    version="1.0.3",
+    version="1.0.5",
     packages=find_namespace_packages(include=["cli_anything.godzilla"]),
     description="CLI harness for Godzilla Security Testing Tool",
     long_description=long_description,
