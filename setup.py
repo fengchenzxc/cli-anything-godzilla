@@ -4,7 +4,7 @@ PyPI package configuration for cli-anything-godzilla.
 This package provides a CLI harness for the Godzilla Security Testing Tool.
 """
 
-from setuptools import setup, find_namespace_packages
+from setuptools import setup, find_packages
 
 # Read README for long description
 with open("README.md", "r", encoding="utf-8") as f:
@@ -12,8 +12,12 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="cli-anything-godzilla",
-    version="1.0.6",
-    packages=find_namespace_packages(include=["cli_anything.godzilla"]),
+    version="1.0.7",
+    packages=[
+        "cli_anything.godzilla",
+        "cli_anything.godzilla.core",
+        "cli_anything.godzilla.utils",
+    ],
     description="CLI harness for Godzilla Security Testing Tool",
     long_description=long_description,
     long_description_content_type="text/markdown",
