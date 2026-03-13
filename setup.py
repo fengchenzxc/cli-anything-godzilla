@@ -6,10 +6,19 @@ This package provides a CLI harness for the Godzilla Security Testing Tool.
 
 from setuptools import setup, find_namespace_packages
 
+# Read README for long description
+with open("README.md", "r", encoding="utf-8") as f:
+    long_description = f.read()
+
 setup(
     name="cli-anything-godzilla",
-    version="1.0.1",
+    version="1.0.2",
     packages=find_namespace_packages(include=["cli_anything.godzilla"]),
+    description="CLI harness for Godzilla Security Testing Tool",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    author="fengchenzxc",
+    url="https://github.com/fengchenzxc/cli-anything-godzilla",
     install_requires=[
         "click>=8.0.0",
         "prompt-toolkit>=3.0.0",
