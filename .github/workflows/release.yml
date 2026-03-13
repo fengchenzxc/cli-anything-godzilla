@@ -1,35 +1,55 @@
 name: Publish to PyPI
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  id-token: write  # Required for trusted publishing
+  contents: write
 
 jobs:
-  publish:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install build twine
+          pip install build
 
       - name: Build package
         run: python -m build
 
       - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: twine upload dist/*
+        uses: pypa/gh-action-pypi-publish@release/v1
 
-      - name: Upload assets to release
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           files: dist/*
+          generate_release_notes: true
+          body: |
+            ## cli-anything-godzilla ${{ steps.get_version.outputs.VERSION }}
+
+            ### Installation
+            ```bash
+            pip install cli-anything-godzilla==${{ steps.get_version.outputs.VERSION }}
+            ```
+
+            ### Changes
+            See [commit history](https://github.com/fengchenzxc/cli-anything-godzilla/commits/v${{ steps.get_version.outputs.VERSION }}) for details.
