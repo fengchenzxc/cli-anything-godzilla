@@ -1,40 +1,401 @@
 # cli-anything-godzilla
 
+[English](#english) | [简体中文](#简体中文)
+
+---
+
+## English
+
+CLI harness for Godzilla Security Testing Tool.
+
+> **Note**: This is a standalone CLI tool that works with the original Godzilla GUI tool.
+
+### Features
+
+- ✅ Complete project management (create, open, save, info)
+- ✅ Shell management (add, list, update, remove, test connection)
+- ✅ Short ID support (all shell commands support short IDs)
+- ✅ C2 Profile management (load and validate)
+- ✅ Interactive REPL mode with friendly UI
+- ✅ JSON output mode for AI agent integration
+- ✅ Compatible with original Godzilla project database
+
+### Installation
+
+#### Prerequisites
+
+- Python 3.12+ (tested with Python 3.12.8)
+- Java Runtime Environment (JRE) 11+
+- Godzilla JAR file (Godzilla15.jar)
+
+#### Install the CLI
+
+```bash
+# From PyPI (when published)
+pip install cli-anything-godzilla
+
+# Or install locally for development
+git clone https://github.com/fengchenzxc/cli-anything-godzilla.git
+cd cli-anything-godzilla
+pip install -e .
+```
+
+#### Verify Installation
+
+```bash
+which cli-anything-godzilla
+cli-anything-godzilla --help
+```
+
+### Usage
+
+#### Start Interactive REPL Mode
+
+```bash
+# Start with no arguments (enter REPL mode)
+cli-anything-godzilla
+
+# Or specify a project
+cli-anything-godzilla -p /path/to/project
+```
+
+#### Project Management
+
+```bash
+# Create a new project
+cli-anything-godzilla project new my-project -n "My Project" -d "Project description"
+
+# Open an existing project
+cli-anything-godzilla project open /path/to/project
+
+# Show project information
+cli-anything-godzilla project info
+
+# List all projects
+cli-anything-godzilla project list
+
+# Close current project
+cli-anything-godzilla project close
+```
+
+#### Shell Management
+
+```bash
+# Add a shell
+cli-anything-godzilla shell add -u http://target.com/shell.jsp -p password
+
+# List all shells
+cli-anything-godzilla shell list
+
+# Get shell details (supports short ID)
+cli-anything-godzilla shell get 31f09e27
+
+# Test shell connectivity (supports short ID)
+cli-anything-godzilla shell test 31f09e27
+
+# Update shell configuration
+cli-anything-godzilla shell update 31f09e27 --remark "Updated remark"
+
+# Remove a shell (supports short ID)
+cli-anything-godzilla shell remove 31f09e27
+
+# Export shells
+cli-anything-godzilla shell export shells.json
+
+# Import shells
+cli-anything-godzilla shell import shells.json
+```
+
+#### C2 Profile Management
+
+```bash
+# List available profiles
+cli-anything-godzilla profile list
+
+# Load a profile
+cli-anything-godzilla profile load /path/to/profile.yml
+
+# Validate a profile
+cli-anything-godzilla profile validate /path/to/profile.yml
+```
+
+#### JSON Output Mode
+
+All commands support `--json` flag for machine-readable output:
+
+```bash
+cli-anything-godzilla --json shell list
+cli-anything-godzilla --json shell get 31f09e27
+cli-anything-godzilla --json project info
+```
+
+### REPL Commands
+
+When in interactive mode, use these commands:
+
+| Command | Description |
+|--------|-------------|
+| `help` | Show available commands |
+| `exit` | Exit REPL mode |
+| `project info` | Show project information |
+| `project list` | List all projects |
+| `shell list` | List all shells |
+| `shell get <id>` | Get shell details |
+| `shell add <url> <password>` | Add new shell |
+| `shell test <id>` | Test shell connectivity |
+| `shell update <id> --remark "xxx"` | Update shell remark |
+| `shell remove <id>` | Remove shell |
+| `profile list` | List C2 profiles |
+
+### Configuration
+
+#### Supported Payload Types
+
+- `JavaDynamicPayload` - Java dynamic payload
+- `CSharpDynamicPayload` - C# dynamic payload
+- `PhpDynamicPayload` - PHP dynamic payload
+
+#### Supported Encryption Types
+
+- `xor` - XOR encryption
+- `aes128` - AES-128 encryption
+- `aes256` - AES-256 encryption
+- `base64` - Base64 encoding
+- `hex` - Hexadecimal encoding
+- `raw` - Raw data
+- `rsa` - RSA encryption
+
+### Running Tests
+
+```bash
+# Run unit tests
+cd /path/to/agent-harness
+python3.12 -m pytest cli_anything/godzilla/tests/test_core.py -v
+
+# Run E2E tests
+python3.12 -m pytest cli_anything/godzilla/tests/test_full_e2e.py -v -s
+
+# Run with force-installed mode
+CLI_ANYTHING_FORCE_INSTALLED=1 python3.12 -m pytest cli_anything/godzilla/tests/ -v -s
+```
+
+---
+
+## 简体中文
+
 CLI 命令行工具包，用于哥斯拉（Godzilla）WebShell 管理器的安全测试。
 
 > **注意**: 本项目是一个独立的 CLI 工具，与原版哥斯拉 GUI 工具配合使用。
 
-## 快速开始
+### 功能特性
+
+- ✅ 完整的项目管理（创建、打开、保存、信息）
+- ✅ Shell 管理（添加、查看、更新、删除、测试连接）
+- ✅ 短 ID 支持（所有 shell 命令支持使用短 ID）
+- ✅ C2 Profile 管理（加载和验证）
+- ✅ 交互式 REPL 模式，界面友好
+- ✅ JSON 输出模式（便于 AI 代理集成）
+- ✅ 兼容原版哥斯拉项目数据库
+
+### 安装
+
+#### 前置要求
+
+- Python 3.12+ (已测试 Python 3.12.8)
+- Java Runtime Environment (JRE) 11+
+- 哥斯拉 JAR 文件 (Godzilla15.jar)
+
+#### 安装 CLI
 
 ```bash
-# 安装
+# 从 PyPI 安装 (发布后)
 pip install cli-anything-godzilla
 
-# 启动 REPL 模式
-cli-anything-godzilla
+# 或本地开发安装
+git clone https://github.com/fengchenzxc/cli-anything-godzilla.git
+cd cli-anything-godzilla
+pip install -e .
+```
 
-# 查看帮助
+#### 验证安装
+
+```bash
+which cli-anything-godzilla
 cli-anything-godzilla --help
 ```
 
-## 文档
+### 使用方法
 
-- [English README](cli_anything/godzilla/README.md)
-- [中文 README](cli_anything/godzilla/README_CN.md)
+#### 启动交互式 REPL 模式
 
-## 功能特性
+```bash
+# 无参数启动（进入 REPL 模式）
+cli-anything-godzilla
 
-- 完整的项目管理
-- Shell 管理（支持短 ID）
-- C2 Profile 管理
-- 交互式 REPL 模式
-- JSON 输出模式
-- 兼容原版哥斯拉项目
+# 指定项目启动
+cli-anything-godzilla -p /path/to/project
+```
 
-## 许可证
+#### 项目管理
+
+```bash
+# 创建新项目
+cli-anything-godzilla project new my-project -n "我的项目" -d "项目描述"
+
+# 打开已有项目
+cli-anything-godzilla project open /path/to/project
+
+# 查看项目信息
+cli-anything-godzilla project info
+
+# 列出所有项目
+cli-anything-godzilla project list
+
+# 关闭当前项目
+cli-anything-godzilla project close
+```
+
+#### Shell 管理
+
+```bash
+# 添加 shell
+cli-anything-godzilla shell add -u http://target.com/shell.jsp -p password
+
+# 列出所有 shell
+cli-anything-godzilla shell list
+
+# 获取 shell 详情（支持短 ID）
+cli-anything-godzilla shell get 31f09e27
+
+# 测试 shell 连接（支持短 ID）
+cli-anything-godzilla shell test 31f09e27
+
+# 更新 shell 配置
+cli-anything-godzilla shell update 31f09e27 --remark "更新备注"
+
+# 删除 shell（支持短 ID）
+cli-anything-godzilla shell remove 31f09e27
+
+# 导出 shell
+cli-anything-godzilla shell export shells.json
+
+# 导入 shell
+cli-anything-godzilla shell import shells.json
+```
+
+#### C2 Profile 管理
+
+```bash
+# 列出可用的 profiles
+cli-anything-godzilla profile list
+
+# 加载 profile
+cli-anything-godzilla profile load /path/to/profile.yml
+
+# 验证 profile
+cli-anything-godzilla profile validate /path/to/profile.yml
+```
+
+#### JSON 输出模式
+
+所有命令支持 `--json` 标志，输出机器可读格式：
+
+```bash
+cli-anything-godzilla --json shell list
+cli-anything-godzilla --json shell get 31f09e27
+cli-anything-godzilla --json project info
+```
+
+### REPL 交互命令
+
+在交互模式下，可使用以下命令：
+
+| 命令 | 描述 |
+|------|------|
+| `help` | 显示可用命令 |
+| `exit` | 退出 REPL 模式 |
+| `project info` | 显示项目信息 |
+| `project list` | 列出所有项目 |
+| `shell list` | 列出所有 shell |
+| `shell get <id>` | 获取 shell 详情 |
+| `shell add <url> <password>` | 添加新 shell |
+| `shell test <id>` | 测试 shell 连接 |
+| `shell update <id> --remark "xxx"` | 更新 shell 备注 |
+| `shell remove <id>` | 删除 shell |
+| `profile list` | 列出 C2 profiles |
+
+### 配置
+
+#### 支持的载荷类型
+
+- `JavaDynamicPayload` - Java 动态载荷
+- `CSharpDynamicPayload` - C# 动态载荷
+- `PhpDynamicPayload` - PHP 动态载荷
+
+#### 支持的加密方式
+
+- `xor` - XOR 加密
+- `aes128` - AES-128 加密
+- `aes256` - AES-256 加密
+- `base64` - Base64 编码
+- `hex` - 十六进制编码
+- `raw` - 原始数据
+- `rsa` - RSA 加密
+
+### 运行测试
+
+```bash
+# 运行单元测试
+cd /path/to/agent-harness
+python3.12 -m pytest cli_anything/godzilla/tests/test_core.py -v
+
+# 运行 E2E 测试
+python3.12 -m pytest cli_anything/godzilla/tests/test_full_e2e.py -v -s
+
+# 使用强制安装模式运行测试
+CLI_ANYTHING_FORCE_INSTALLED=1 python3.12 -m pytest cli_anything/godzilla/tests/ -v -s
+```
+
+### 兼容性
+
+- 可直接打开原版哥斯拉创建的项目（自动生成配置文件）
+- 数据库列名使用 camelCase（与原版哥斯拉保持一致）
+- 支持 HTTP 请求头的 JSON 和纯文本两种格式
+
+---
+
+## Project Structure / 项目结构
+
+```
+cli_anything/godzilla/
+├── __init__.py
+├── godzilla_cli.py      # Main CLI entry point / CLI 主入口
+├── core/
+│   ├── __init__.py
+│   ├── project.py       # Project management / 项目管理
+│   ├── shell.py         # Shell management / Shell 管理
+│   ├── profile.py       # C2 Profile management / C2 Profile 管理
+│   └── database.py      # Database operations / 数据库操作
+├── utils/
+│   ├── __init__.py
+│   ├── godzilla_backend.py  # Godzilla JAR integration / 哥斯拉 JAR 集成
+│   └── repl_skin.py         # REPL interface / REPL 界面
+└── tests/
+    ├── TEST.md          # Test plan and results / 测试计划和结果
+    ├── test_core.py     # Unit tests / 单元测试
+    └── test_full_e2e.py # E2E tests / E2E 测试
+```
+
+---
+
+## License / 许可证
 
 MIT License
 
-## 免责声明
+---
 
-本工具仅供安全研究和授权测试使用。使用本工具进行未经授权的测试是非法的。
+## Disclaimer / 免责声明
+
+**English**: This tool is for authorized security testing and research purposes only. Unauthorized use is illegal.
+
+**中文**: 本工具仅供安全研究和授权测试使用。使用本工具进行未经授权的测试是非法的。
