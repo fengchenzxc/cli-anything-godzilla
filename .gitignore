@@ -45,3 +45,7 @@ htmlcov/
 # Misc
 .DS_Store
 *.log
+
+# Development tools
+publish.sh
+PUBLISH_GUIDE.md

@@ -65,7 +65,7 @@ cli-anything-godzilla -p /path/to/project
 
 ```bash
 # Create a new project
-cli-anything-godzilla project new my-project -n "My Project" -d "Project description"
+cli-anything-godzilla project new -n "My Project" -d "Project description"
 
 # Open an existing project
 cli-anything-godzilla project open /path/to/project
@@ -244,7 +244,7 @@ cli-anything-godzilla -p /path/to/project
 
 ```bash
 # 创建新项目
-cli-anything-godzilla project new my-project -n "我的项目" -d "项目描述"
+cli-anything-godzilla project new -n "我的项目" -d "项目描述"
 
 # 打开已有项目
 cli-anything-godzilla project open /path/to/project

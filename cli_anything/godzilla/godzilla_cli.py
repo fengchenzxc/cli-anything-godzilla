@@ -94,7 +94,7 @@ def help_cmd():
 
 \033[33mExamples:\033[0m
   # Create a new project
-  cli-anything-godzilla project new my-project
+  cli-anything-godzilla project new -n "My Project" -d "Description"
 
   # Open existing project
   cli-anything-godzilla project open ./project.json

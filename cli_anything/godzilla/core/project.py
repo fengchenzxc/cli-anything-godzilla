@@ -18,6 +18,9 @@ from cli_anything.godzilla.core.database import GodzillaDatabase
 # Default project directory
 DEFAULT_PROJECT_DIR = Path.home() / ".godzilla_cli"
 
+# Session file to persist current project across CLI invocations
+SESSION_FILE = DEFAULT_PROJECT_DIR / ".session"
+
 
 class Project:
     """Represents a Godzilla CLI project."""
@@ -161,6 +164,31 @@ class Project:
 _current_project: Optional[Project] = None
 
 
+def _save_session(project_path: str) -> None:
+    """Save current project path to session file."""
+    DEFAULT_PROJECT_DIR.mkdir(parents=True, exist_ok=True)
+    with open(SESSION_FILE, 'w') as f:
+        json.dump({"current_project": project_path}, f)
+
+
+def _load_session() -> Optional[str]:
+    """Load current project path from session file."""
+    if SESSION_FILE.exists():
+        try:
+            with open(SESSION_FILE, 'r') as f:
+                data = json.load(f)
+                return data.get("current_project")
+        except (json.JSONDecodeError, IOError):
+            pass
+    return None
+
+
+def _clear_session() -> None:
+    """Clear session file."""
+    if SESSION_FILE.exists():
+        SESSION_FILE.unlink()
+
+
 def create_project(name: str, path: Optional[str] = None, description: str = "") -> Project:
     """Create a new Godzilla CLI project.
 
@@ -188,6 +216,9 @@ def create_project(name: str, path: Optional[str] = None, description: str = "")
     # Set as current project
     _current_project = project
 
+    # Save session
+    _save_session(str(project.project_path))
+
     return project
 
 
@@ -211,6 +242,10 @@ def open_project(path: str) -> Project:
         raise FileNotFoundError(f"Project not found: {path}")
 
     _current_project = project
+
+    # Save session
+    _save_session(path)
+
     return project
 
 
@@ -252,6 +287,7 @@ def close_project(project: Optional[Project] = None) -> bool:
 
     if proj == _current_project:
         _current_project = None
+        _clear_session()
 
     return True
 
@@ -310,4 +346,17 @@ def get_current_project() -> Optional[Project]:
     Returns:
         Current Project instance or None
     """
+    global _current_project
+
+    # If no project in memory, try to restore from session
+    if _current_project is None:
+        session_path = _load_session()
+        if session_path:
+            try:
+                project = Project(session_path)
+                if project.open():
+                    _current_project = project
+            except Exception:
+                pass
+
     return _current_project

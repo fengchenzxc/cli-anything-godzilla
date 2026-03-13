@@ -45,7 +45,7 @@ cli-anything-godzilla -p /path/to/project.json
 ### Create a New Project
 
 ```bash
-cli-anything-godzilla project new my-project -n "My Project" -d "Project description"
+cli-anything-godzilla project new -n "My Project" -d "Project description"
 ```
 
 ### Open an Existing Project
